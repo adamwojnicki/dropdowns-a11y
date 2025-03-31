@@ -30,16 +30,14 @@ class Dropdown {
 
         this.button.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                this.isOpen = false;
-                this.toggle();
+                this.button.click()
                 this.button.focus();
             }
         });
 
         this.list.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                this.isOpen = false;
-                this.toggle();
+                this.button.click();
                 this.button.focus();
             }
             if (event.key === 'Enter') {
