@@ -21,7 +21,7 @@ class Dropdown {
         this.list.setAttribute('aria-hidden', !this.isOpen);
     }
 
-    init() {
+    setupInteractions() {
         this.button.addEventListener('click', () => {
             this.isOpen = !this.isOpen;
             this.toggle();
@@ -44,6 +44,10 @@ class Dropdown {
                 this.isOpen = false;
                 this.toggle();
             }
+            if (event.key === 'Tab') {
+                this.isOpen = false;
+                this.toggle();
+            }
             if (event.key === 'ArrowDown') {
                 const focusedItemIndex = Array.from(this.links).findIndex((item) => document.activeElement === item);
                 const nextItemIndex = (focusedItemIndex + 1) % this.links.length;
@@ -55,6 +59,17 @@ class Dropdown {
                 this.links[nextItemIndex].focus();
             }
         });
+        // close dropdown on click outside
+        document.addEventListener('click', (event) => {
+            if (!this.dropdown.contains(event.target)) {
+                this.isOpen = false;
+                this.toggle();
+            }
+        });
+    }
+
+    init() {
+        this.setupInteractions();
     }
 }
 
