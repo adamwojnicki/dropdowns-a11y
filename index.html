@@ -10,21 +10,39 @@
 
 <body>
     <main id="main">
-        <div class="js-dropdown dropdown">
-            <button class=" dropdown__button" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-list"
-                role="comboBox">Dropdown</button>
-            <ul id="dropdown-list" class="js-dropdown-list dropdown__list" role="menu" aria-hidden="true">
-                <li class="dropdown__item" role="menuitem">
+        <!-- DD 1 -->
+        <div class="dropdown js-dropdown">
+            <button class="dropdown__button js-dropdown-button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="dropdown-list" role="comboBox">Dropdown</button>
+            <ul id="dropdown-list" class="dropdown__list js-dropdown-list" role="menu" aria-hidden="true">
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
                     <a class="dropdown__link" href="#">Link 1</a>
                 </li>
-                <li class="dropdown__item" role="menuitem">
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
                     <a class="dropdown__link" href="#">Link 2</a>
                 </li>
-                <li class="dropdown__item" role="menuitem">
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
                     <a class="dropdown__link" href="#">Link 3</a>
                 </li>
             </ul>
         </div>
+        <!-- DD 2 -->
+        <div class="dropdown js-dropdown">
+            <button class="dropdown__button js-dropdown-button" aria-expanded="false" aria-haspopup="true"
+                aria-controls="dropdown-list" role="comboBox">Dropdown</button>
+            <ul id="dropdown-list" class="dropdown__list js-dropdown-list" role="menu" aria-hidden="true">
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
+                    <a class="dropdown__link" href="#">Link 1</a>
+                </li>
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
+                    <a class="dropdown__link" href="#">Link 2</a>
+                </li>
+                <li class="dropdown__item js-dropdown-item" role="menuitem">
+                    <a class="dropdown__link" href="#">Link 3</a>
+                </li>
+            </ul>
+        </div>
+
         <!-- For compaarison only -->
         <select name="aa" id="aa">
             <option value="vv">opt1</option>

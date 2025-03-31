@@ -4,6 +4,8 @@ class Dropdown {
         this.button = dropdown.querySelector(ddBtnSelector) || dropdown.querySelector('[role="comboBox"]');
         this.list = dropdown.querySelector(ddListSelector) || dropdown.querySelector('[role="menu"]');
         this.listItems = dropdown.querySelectorAll(ddListItemSelector) || dropdown.querySelectorAll('[role="menuitem"]');
+        this.links = dropdown.querySelectorAll('[role="menuitem"] a');
+
         this.isOpen = false;
 
         if (!this.button || !this.list || !this.listItems) {
@@ -23,13 +25,14 @@ class Dropdown {
         this.button.addEventListener('click', () => {
             this.isOpen = !this.isOpen;
             this.toggle();
-            this.list.querySelector('.dropdown__item')?.focus();
+            this.links[0]?.focus();
         });
 
         this.button.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 this.isOpen = false;
                 this.toggle();
+                this.button.focus();
             }
         });
 
@@ -37,10 +40,21 @@ class Dropdown {
             if (event.key === 'Escape') {
                 this.isOpen = false;
                 this.toggle();
+                this.button.focus();
             }
             if (event.key === 'Enter') {
                 this.isOpen = false;
                 this.toggle();
+            }
+            if (event.key === 'ArrowDown') {
+                const focusedItemIndex = Array.from(this.links).findIndex((item) => document.activeElement === item);
+                const nextItemIndex = (focusedItemIndex + 1) % this.links.length;
+                this.links[nextItemIndex].focus();
+            }
+            if (event.key === 'ArrowUp') {
+                const focusedItemIndex = Array.from(this.links).findIndex((item) => document.activeElement === item);
+                const nextItemIndex = (focusedItemIndex - 1 + this.links.length) % this.links.length;
+                this.links[nextItemIndex].focus();
             }
         });
     }
