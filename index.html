@@ -13,32 +13,31 @@
         <!-- DD 1 -->
         <div class="dropdown js-dropdown">
             <button class="dropdown__button js-dropdown-button" aria-expanded="false" aria-haspopup="true"
-                aria-controls="dropdown-list" role="comboBox">Dropdown</button>
-            <ul id="dropdown-list" class="dropdown__list js-dropdown-list" role="menu" aria-hidden="true">
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 1</a>
+                aria-controls="dropdown-list" role="comboBox">
+                <span class="text">Select an option</span>
+                <span class="icon" aria-hidden="true">
+                    <svg fill="#000000" height="16px" width="16px" version="1.1" id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 330 330" xml:space="preserve">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path id="XMLID_225_"
+                                d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z">
+                            </path>
+                        </g>
+                    </svg>
+                </span>
+            </button>
+            <ul id="dropdown-list" class="dropdown__list js-dropdown-list" role="listbox" aria-hidden="true">
+                <li class="dropdown__item js-dropdown-item" role="option" tabindex="0" value="opt-1">
+                    <span class="text">Option 1</span>
                 </li>
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 2</a>
+                <li class="dropdown__item js-dropdown-item" role="option" tabindex="0" value="opt-2">
+                    <span class="text">Option 2</span>
                 </li>
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 3</a>
-                </li>
-            </ul>
-        </div>
-        <!-- DD 2 -->
-        <div class="dropdown js-dropdown">
-            <button class="dropdown__button js-dropdown-button" aria-expanded="false" aria-haspopup="true"
-                aria-controls="dropdown-list" role="comboBox">Dropdown</button>
-            <ul id="dropdown-list" class="dropdown__list js-dropdown-list" role="menu" aria-hidden="true">
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 1</a>
-                </li>
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 2</a>
-                </li>
-                <li class="dropdown__item js-dropdown-item" role="menuitem">
-                    <a class="dropdown__link" href="#">Link 3</a>
+                <li class="dropdown__item js-dropdown-item" role="option" tabindex="0" value="opt-3">
+                    <span class="text">Option 3</span>
                 </li>
             </ul>
         </div>

@@ -2,15 +2,17 @@ class Dropdown {
     constructor(dropdown, ddBtnSelector, ddListSelector, ddListItemSelector) {
         this.dropdown = dropdown;
         this.button = dropdown.querySelector(ddBtnSelector) || dropdown.querySelector('[role="comboBox"]');
-        this.list = dropdown.querySelector(ddListSelector) || dropdown.querySelector('[role="menu"]');
-        this.listItems = dropdown.querySelectorAll(ddListItemSelector) || dropdown.querySelectorAll('[role="menuitem"]');
-        this.links = dropdown.querySelectorAll('[role="menuitem"] a');
+        this.list = dropdown.querySelector(ddListSelector) || dropdown.querySelector('[role="listbox"]');
+        this.listItems = dropdown.querySelectorAll('[role="option"]');
 
         this.isOpen = false;
 
         if (!this.button || !this.list || !this.listItems) {
             console.error('Dropdown initialization failed. Missing required elements.');
             return;
+        }
+        if (this.listItems.length === 0) {
+            console.error('No option items found');
         }
         this.init();
     }
@@ -25,7 +27,7 @@ class Dropdown {
         this.button.addEventListener('click', () => {
             this.isOpen = !this.isOpen;
             this.toggle();
-            this.links[0]?.focus();
+            this.listItems[0]?.focus();
         });
 
         this.button.addEventListener('keydown', (event) => {
@@ -35,30 +37,57 @@ class Dropdown {
             }
         });
 
-        this.list.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                this.button.click();
-                this.button.focus();
-            }
-            if (event.key === 'Enter') {
+        // this.list.addEventListener('keydown', (event) => {
+        // if (event.key === 'Escape') {
+        //     this.button.click();
+        //     this.button.focus();
+        // }
+        // if (event.key === 'Enter') {
+        //     this.isOpen = false;
+        //     this.toggle();
+        // }
+        // if (event.key === 'Tab') {
+        //     this.isOpen = false;
+        //     this.toggle();
+        // }
+        // if (event.key === 'ArrowDown') {
+        //     console.log('arrow down');
+
+        //     const focusedItemIndex = Array.from(this.listItems).findIndex((item) => document.activeElement === item);
+        //     const nextItemIndex = (focusedItemIndex + 1) % this.listItems.length;
+        //     this.listItems[nextItemIndex].focus();
+        // }
+        // if (event.key === 'ArrowUp') {
+        //     const focusedItemIndex = Array.from(this.listItems).findIndex((item) => document.activeElement === item);
+        //     const nextItemIndex = (focusedItemIndex - 1 + this.listItems.length) % this.listItems.length;
+        //     this.listItems[nextItemIndex].focus();
+        // }
+        // });
+
+        this.listItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                this.handleChange();
                 this.isOpen = false;
                 this.toggle();
-            }
-            if (event.key === 'Tab') {
-                this.isOpen = false;
-                this.toggle();
-            }
-            if (event.key === 'ArrowDown') {
-                const focusedItemIndex = Array.from(this.links).findIndex((item) => document.activeElement === item);
-                const nextItemIndex = (focusedItemIndex + 1) % this.links.length;
-                this.links[nextItemIndex].focus();
-            }
-            if (event.key === 'ArrowUp') {
-                const focusedItemIndex = Array.from(this.links).findIndex((item) => document.activeElement === item);
-                const nextItemIndex = (focusedItemIndex - 1 + this.links.length) % this.links.length;
-                this.links[nextItemIndex].focus();
-            }
-        });
+            });
+
+            item.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowDown') {
+                    const nextItemIndex = (index + 1) % this.listItems.length;
+                    this.listItems[nextItemIndex].focus();
+                }
+                if (event.key === 'ArrowUp') {
+                    const prevItemIndex = (index - 1 + this.listItems.length) % this.listItems.length;
+                    this.listItems[prevItemIndex].focus();
+                }
+                if (event.key === 'Enter') {
+                    this.handleChange();
+                    this.isOpen = false;
+                    this.toggle();
+                }
+            });
+
+        })
         // close dropdown on click outside
         document.addEventListener('click', (event) => {
             if (!this.dropdown.contains(event.target)) {
@@ -68,14 +97,18 @@ class Dropdown {
         });
     }
 
+    handleChange() {
+        console.log('changed');
+    }
+
     init() {
         this.setupInteractions();
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const dropdowns = document.querySelectorAll('.js-dropdown');
-    dropdowns.forEach((dropdown) => {
-        new Dropdown(dropdown);
-    });
+// document.addEventListener('DOMContentLoaded', () => {
+const dropdowns = document.querySelectorAll('.js-dropdown');
+dropdowns.forEach((dropdown) => {
+    new Dropdown(dropdown);
 });
+// });
