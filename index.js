@@ -6,6 +6,7 @@ class Dropdown {
         this.listItems = dropdown.querySelectorAll('[role="option"]');
 
         this.isOpen = false;
+        this.currentSelectedIndex = 0;
 
         if (!this.button || !this.list || !this.listItems) {
             console.error('Dropdown initialization failed. Missing required elements.');
@@ -23,55 +24,46 @@ class Dropdown {
         this.list.setAttribute('aria-hidden', !this.isOpen);
     }
 
+    open() {
+        this.isOpen = true;
+        this.toggle();
+        this.listItems[this.currentSelectedIndex]?.focus();
+    }
+
+    close() {
+        this.isOpen = false;
+        this.toggle();
+        this.button.focus();
+    }
+
     setupInteractions() {
-        this.button.addEventListener('click', () => {
-            this.isOpen = !this.isOpen;
-            this.toggle();
-            this.listItems[0]?.focus();
-        });
+        this.button.addEventListener('click', () => this.isOpen ? this.close() : this.open());
 
         this.button.addEventListener('keydown', (event) => {
+            if (event.key.includes(['Enter', 'Space'])) {
+                this.open();
+            }
             if (event.key === 'Escape') {
-                this.button.click()
-                this.button.focus();
+                this.close();
             }
         });
 
-        // this.list.addEventListener('keydown', (event) => {
-        // if (event.key === 'Escape') {
-        //     this.button.click();
-        //     this.button.focus();
-        // }
-        // if (event.key === 'Enter') {
-        //     this.isOpen = false;
-        //     this.toggle();
-        // }
-        // if (event.key === 'Tab') {
-        //     this.isOpen = false;
-        //     this.toggle();
-        // }
-        // if (event.key === 'ArrowDown') {
-        //     console.log('arrow down');
-
-        //     const focusedItemIndex = Array.from(this.listItems).findIndex((item) => document.activeElement === item);
-        //     const nextItemIndex = (focusedItemIndex + 1) % this.listItems.length;
-        //     this.listItems[nextItemIndex].focus();
-        // }
-        // if (event.key === 'ArrowUp') {
-        //     const focusedItemIndex = Array.from(this.listItems).findIndex((item) => document.activeElement === item);
-        //     const nextItemIndex = (focusedItemIndex - 1 + this.listItems.length) % this.listItems.length;
-        //     this.listItems[nextItemIndex].focus();
-        // }
-        // });
+        this.list.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                this.close();
+            }
+            if (event.key === 'Tab') {
+                this.close();
+            }
+        });
 
         this.listItems.forEach((item, index) => {
             item.addEventListener('click', () => {
-                this.handleChange();
-                this.isOpen = false;
-                this.toggle();
+                this.close();
             });
 
             item.addEventListener('keydown', (event) => {
+                event.preventDefault();
                 if (event.key === 'ArrowDown') {
                     const nextItemIndex = (index + 1) % this.listItems.length;
                     this.listItems[nextItemIndex].focus();
@@ -81,9 +73,10 @@ class Dropdown {
                     this.listItems[prevItemIndex].focus();
                 }
                 if (event.key === 'Enter') {
-                    this.handleChange();
-                    this.isOpen = false;
-                    this.toggle();
+                    item.click();
+                }
+                if (event.key === 'Escape') {
+                    this.close();
                 }
             });
 
@@ -91,14 +84,9 @@ class Dropdown {
         // close dropdown on click outside
         document.addEventListener('click', (event) => {
             if (!this.dropdown.contains(event.target)) {
-                this.isOpen = false;
-                this.toggle();
+                this.close();
             }
         });
-    }
-
-    handleChange() {
-        console.log('changed');
     }
 
     init() {
